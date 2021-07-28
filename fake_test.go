@@ -5,7 +5,7 @@ import (
 )
 
 func TestSetLang(t *testing.T) {
-	err := SetLang("ru")
+	err := SetLang("en")
 	if err != nil {
 		t.Error("SetLang should successfully set lang")
 	}
@@ -13,24 +13,6 @@ func TestSetLang(t *testing.T) {
 	err = SetLang("sd")
 	if err == nil {
 		t.Error("SetLang with nonexistent lang should return error")
-	}
-}
-
-func TestFakerRuWithoutCallback(t *testing.T) {
-	SetLang("ru")
-	EnFallback(false)
-	brand := Brand()
-	if brand != "" {
-		t.Error("Fake call with no samples should return blank string")
-	}
-}
-
-func TestFakerRuWithCallback(t *testing.T) {
-	SetLang("ru")
-	EnFallback(true)
-	brand := Brand()
-	if brand == "" {
-		t.Error("Fake call for name with no samples with callback should not return blank string")
 	}
 }
 

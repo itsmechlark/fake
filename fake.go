@@ -5,7 +5,7 @@ Most data and methods are ported from forgery/ffaker Ruby gems.
 
 Currently english and russian languages are available.
 
-For the list of available methods please look at https://godoc.org/github.com/icrowley/fake.
+For the list of available methods please look at https://godoc.org/github.com/itsmechlark/fake.
 
 Fake embeds samples data files unless you call UseExternalData(true) in order to be able to work without external files dependencies when compiled, so, if you add new data files or make changes to existing ones don't forget to regenerate data.go file using github.com/mjibson/esc tool and esc -o data.go -pkg fake data command (or you can just use go generate command if you are using Go 1.4 or later).
 
@@ -93,11 +93,7 @@ func (s *rndSrc) Seed(n int64) {
 // GetLangs returns a slice of available languages
 func GetLangs() []string {
 	var langs []string
-	for k, v := range data {
-		if v.isDir && k != "/" && k != "/data" {
-			langs = append(langs, strings.Replace(k, "/data/", "", 1))
-		}
-	}
+	langs = append(langs, "en")
 	return langs
 }
 

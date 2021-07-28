@@ -1,48 +1,17 @@
-.DEFAULT_GOAL = all
+NO_COLOR=\033[0m
+OK_COLOR=\033[32;01m
+ERROR_COLOR=\033[31;01m
+WARN_COLOR=\033[33;01m
 
-numcpus  := $(shell cat /proc/cpuinfo | grep '^processor\s*:' | wc -l)
-version  := $(shell git rev-list --count HEAD).$(shell git rev-parse --short HEAD)
+.PHONY: all test build
 
-name     := fake
-package  := github.com/icrowley/$(name)
+all: test build
 
-.PHONY: all
-all:: dependencies
+# Builds the project
+build:
+	@echo "$(OK_COLOR)==> Building... $(NO_COLOR)"
+	@goreleaser --snapshot --rm-dist --skip-validate
 
-.PHONY: tools
-tools::
-	@if [ ! -e "$(GOPATH)"/bin/glide ]; then go get github.com/Masterminds/glide; fi
-	@if [ ! -e "$(GOPATH)"/bin/godef ]; then go get github.com/rogpeppe/godef; fi
-	@if [ ! -e "$(GOPATH)"/bin/gocode ]; then go get github.com/nsf/gocode; fi
-	@if [ ! -e "$(GOPATH)"/bin/gometalinter ]; then go get github.com/alecthomas/gometalinter && gometalinter --install; fi
-	@if [ ! -e "$(GOPATH)"/src/github.com/stretchr/testify/assert ]; then go get github.com/stretchr/testify/assert; fi
-
-.PHONY: dependencies
-dependencies:: tools
-	glide install
-
-.PHONY: clean
-clean:: tools
-	glide cache-clear
-
-.PHONY: test
-test:: dependencies
-	go test -v \
-           $(shell glide novendor)
-
-.PHONY: bench
-bench:: dependencies
-	go test        \
-           -bench=. -v \
-           $(shell glide novendor)
-
-.PHONY: lint
-lint:: dependencies
-	go vet $(shell glide novendor)
-	gometalinter                     \
-		--deadline=5m            \
-		--concurrency=$(numcpus) \
-		$(shell glide novendor)
-
-.PHONY: check
-check:: lint test
+test:
+	@echo "$(OK_COLOR)==> Running tests$(NO_COLOR)"
+	@CGO_ENABLED=0 go test -cover ./... -coverprofile=coverage.txt -covermode=atomic

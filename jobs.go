@@ -6,17 +6,17 @@ import (
 
 // Company generates company name
 func Company() string {
-	return lookup(lang, "companies", true)
+	return lookup(lang, "company_names", true)
 }
 
 // JobTitle generates job title
 func JobTitle() string {
-	job := lookup(lang, "jobs", true)
+	job := lookup(lang, "job_titles", true)
 	return strings.Replace(job, "#{N}", jobTitleSuffix(), 1)
 }
 
 func jobTitleSuffix() string {
-	return lookup(lang, "jobs_suffixes", false)
+	return lookup(lang, "job_titles_suffixes", false)
 }
 
 // Industry generates industry name
