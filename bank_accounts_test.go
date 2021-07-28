@@ -13,9 +13,9 @@ func TestBankAccounts(t *testing.T) {
 			t.Errorf("BankAccountType failed with lang %s", lang)
 		}
 
-		v = BankAccountNum("")
+		v = BankAccountNumDefault()
 		if v == "" {
-			t.Errorf("BankAccountNum failed with lang %s", lang)
+			t.Errorf("BankAccountNumDefault failed with lang %s", lang)
 		}
 
 		v = BankAccountNum("ad")

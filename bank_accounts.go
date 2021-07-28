@@ -23,9 +23,12 @@ type bankAccount struct {
 
 var bankAccounts = map[string]bankAccount{
 	"ad":       {"Andorra", 24},
-	"ae": {"United Arab Emirates", 23},
+	"ae": 		{"United Arab Emirates", 23},
 	"al":       {"Albania", 28},
-	"at":   {"Austria", 20},
+	"at":   	{"Austria", 20},
+	"az":   	{"Azerbaijan, Republic of", 28},
+	"ba":   	{"Bosnia", 20},
+	"be":   	{"Belgium", 16},
 }
 
 func BankAccountType() string {
@@ -36,6 +39,10 @@ func BankAccountType() string {
 	}
 
 	return vendors[r.Intn(n)]
+}
+
+func BankAccountNumDefault() string {
+	return BankAccountNum("")
 }
 
 // BankAccount generated bank account number according to the bank number rules
