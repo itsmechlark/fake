@@ -15,10 +15,18 @@ jobs:
   #       uses: actions/setup-go@v2
   #     - name: Check out code
   #       uses: actions/checkout@v2
+        
+  #     - name: Run lint
+  #       if: success()
+  #       run: |
+  #         go install
+  #         "$(go env GOPATH)"/bin/gometalinter --install
+
   #     - name: Run lint
   #       continue-on-error: true
   #       if: success()
-  #       run: make lint
+  #       run: |
+  #         "$(go env GOPATH)"/bin/gometalinter --deadline=5m .
 
   test:
     name: Test
