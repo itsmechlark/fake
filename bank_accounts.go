@@ -17,18 +17,33 @@ func BankName() string {
 }
 
 type bankAccount struct {
-	vendor   string
-	length   int
+	vendor     string
+	min_length int
+	max_length int
 }
 
 var bankAccounts = map[string]bankAccount{
-	"ad":       {"Andorra", 24},
-	"ae": 		{"United Arab Emirates", 23},
-	"al":       {"Albania", 28},
-	"at":   	{"Austria", 20},
-	"az":   	{"Azerbaijan, Republic of", 28},
-	"ba":   	{"Bosnia", 20},
-	"be":   	{"Belgium", 16},
+	"aub":                 {"Asia United Bank", 12, 12},
+	"bpi":                 {"BPI", 10, 12},
+	"citibank":            {"Citibank, N.A.", 10, 10},
+	"ewbanker":            {"East West Bank", 11, 12},
+	"maybank":             {"Maybank Phils. Inc.", 11, 12},
+	"ucpb":                {"United Coconut Planters Bank", 12, 12},
+	"rcbcsavings":         {"RCBC Savings Bank", 10, 10},
+	"businessbank":        {"Philippine Business Bank", 12, 12},
+	"metrobank":           {"Metrobank", 12, 13},
+	"chinabank":           {"China Bank", 10, 12},
+	"alliedbank":          {"Allied Bank", 10, 16},
+	"bpifamily":           {"BPI Family Savings Bank", 10, 12},
+	"pbcom":               {"PBCOM", 12, 12},
+	"businessbanksavings": {"Philippine Business Bank, Inc., A Savings Bank", 12, 12},
+	"robinsonsbank":       {"Robinsons Bank", 12, 15},
+	"sterlingbank":        {"Sterling Bank", 12, 12},
+	"dbp":                 {"Development Bank of the Philippines", 10, 10},
+	"landbank":            {"Land Bank", 10, 12},
+	"rcbc":                {"RCBC", 10, 12},
+	"unionbank":           {"Union Bank of the Philippines", 10, 12},
+	"bankcom":             {"Bank of Commerce", 11, 12},
 }
 
 func BankAccountType() string {
@@ -58,7 +73,7 @@ func BankAccountNum(vendor string) string {
 	}
 	bank := bankAccounts[vendor]
 	num := []rune("")
-	for i := 0; i < bank.length; i++ {
+	for i := 0; i < bank.max_length; i++ {
 		num = append(num, genBankAccountDigit(num))
 	}
 	return string(num)
