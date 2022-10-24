@@ -12,14 +12,17 @@ func BICS() string {
 	return lookup(lang, "bics", true)
 }
 
-func BankName() string {
-	return lookup(lang, "bank_names", true)
-}
-
 type bankAccount struct {
 	vendor     string
 	min_length int
 	max_length int
+}
+
+var bankAccountTypes = []string{
+	"Checking",
+	"Savings",
+	"Money Market",
+	"Certificate of Deposit",
 }
 
 var bankAccounts = map[string]bankAccount{
@@ -46,7 +49,7 @@ var bankAccounts = map[string]bankAccount{
 	"bankcom":             {"Bank of Commerce", 11, 12},
 }
 
-func BankAccountType() string {
+func BankName() string {
 	n := len(bankAccounts)
 	var vendors []string
 	for _, cc := range bankAccounts {
@@ -54,6 +57,10 @@ func BankAccountType() string {
 	}
 
 	return vendors[r.Intn(n)]
+}
+
+func BankAccountType() string {
+	return bankAccountTypes[r.Intn(len(bankAccountTypes))]
 }
 
 func BankAccountNumDefault() string {
